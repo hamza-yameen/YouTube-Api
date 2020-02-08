@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Search YouTube</h1>
+            <p class="lead text-muted">Get the top nine results on YouTube for your query!</p>
+            <form method="POST">
+                <div class="input-group mb-3">
+                    {% csrf_token %}
+                    <input type="text" name="search" class="form-control" aria-label="Username">
+                </div>
+                <p>
+                    <button type="submit" name="submit" value="search" class="btn btn-primary my-2">YouTube Search</button>
+                    <button type="submit" name="submit" value="lucky" class="btn btn-secondary my-2">I'm Feeling Lucky</button>
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="row">
+
+                {% for vid in videos %}
+
+                <div class="col-sm-4 mb-2">
+                    <div class="card">
+                        <img class="card-img-top" width="100%" height="250" src="{{ vid.thumbnail }}" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ vid.title }}</h4>
+                            <div class="d-flex justify-content-between">
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-primary" href="{{ vid.url }}">View</a>
+                                </div>
+                                <div>
+                                    <small class="text-muted">{{ vid.duration }} mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
